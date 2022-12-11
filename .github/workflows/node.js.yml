@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  username: ${{ secrets.DOCKERHUB_USERNAME }}
-  password: ${{ secrets.DOCKERHUB_TOKEN }}
+  DOCK_NAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCK_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   build_and_preview:
@@ -25,8 +25,8 @@ jobs:
       - name: 'Login to Docker Hub'
         uses: docker/login-action@v2
         with:
-          username: $username
-          password: $password
+          username: $DOCK_NAME
+          password: $DOCK_PASS
           
       - name: 'Set up Docker Buildx'
         uses: docker/setup-buildx-action@v2
@@ -37,5 +37,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: $username/clockbox:latest
+          tags: $DOCK_NAME/clockbox:latest
 
